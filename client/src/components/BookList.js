@@ -14,27 +14,24 @@ const getBooksQuery = gql`
 `;
 
 class BookList extends Component {
-  displayBooks() {
-    var data = this.props.data;
-    if (data.loading) {
-      return <div>Loading books...</div>;
-    } else {
-      return data.books.map(book => {
-        return <li key={book.id}>{book.name}</li>;
-      });
-    }
+  constructor(props) {
+    super(props);
+    console.log("CONSTRUCTOR PROPS", this.props);
   }
   render() {
-    console.log(this.props);
     return (
       <Query query={getBooksQuery}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error :(</p>;
-
+          if (error) return <p>Error :</p>;
+          console.log("DATA", data);
           return (
             <div>
-              <ul id="book-list">Book Stores</ul>
+              <ul id="book-list">
+                {data.books.map(book => {
+                  return <li key={book.id}>{book.name}</li>;
+                })}
+              </ul>
             </div>
           );
         }}
